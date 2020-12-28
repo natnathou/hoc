@@ -12,12 +12,10 @@ import React from 'react';
 import App from '../../components/App';
 import Router from '../../components/Router';
 
-let renders: RenderResult<
-  typeof import('d:/Biblioth\u00E8que/Documents/Code/hoc/node_modules/@testing-library/dom/types/queries')
->;
+let renders: any;
 describe('When everything is ok', () => {
   beforeEach(() => {
-    renders = render(
+    let renders = render(
       <Router>
         <App />
       </Router>
