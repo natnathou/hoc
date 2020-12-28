@@ -18,7 +18,9 @@ export class commentsReducer {
   }
   private static addManycomments(state: State, action: AddManyCommentAction) {
     const payload = action.payload;
-    let comments = { ..._.mapKeys<CommentType>(payload, 'id') };
-    return { ...state, comments };
+    return {
+      ...state,
+      comments: { ..._.mapKeys<CommentType>(payload, 'id') },
+    };
   }
 }

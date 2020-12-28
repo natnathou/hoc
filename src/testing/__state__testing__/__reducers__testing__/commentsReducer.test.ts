@@ -1,7 +1,7 @@
 import {
   ActionTypes,
   addManyComments,
-  Comment,
+  CommentType,
   MainAction,
 } from '../../../state/actions';
 import { intitialState } from '../../../state/intitialState';
