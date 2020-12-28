@@ -1,4 +1,4 @@
-import { intitialState, State } from '../../../state/intitialState';
+import { intitialState, State } from './../../state/intitialState';
 
 describe('When everything is Ok', () => {
   test('should return intitialState', () => {

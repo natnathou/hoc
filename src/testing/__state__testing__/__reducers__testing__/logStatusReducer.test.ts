@@ -1,6 +1,6 @@
-import { ActionTypes, logAction, MainAction } from '../../../../state/actions';
-import { intitialState } from '../../../../state/intitialState';
-import { logStatusReducer } from '../../../../state/reducers/logStatusReducer';
+import { ActionTypes, logAction, MainAction } from './../../../state/actions';
+import { intitialState } from './../../../state/intitialState';
+import { logStatusReducer } from './../../../state/reducers/logStatusReducer';
 
 describe('When everything is ok', () => {
   test('class logStatusReducer render the correct ouput', () => {

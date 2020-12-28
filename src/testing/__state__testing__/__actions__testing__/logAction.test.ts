@@ -3,7 +3,7 @@ import {
   logAction,
   LogAction,
   MainAction,
-} from '../../../../state/actions';
+} from './../../../state/actions';
 
 describe('When everything is ok', () => {
   test('shoulde return an object with type LogAction with the correct payload', () => {
