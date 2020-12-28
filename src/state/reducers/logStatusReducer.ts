@@ -1,4 +1,4 @@
-import { Action, ActionTypes, LogAction, MainAction } from '../actions';
+import { Action, LogAction, MainAction } from '../actions';
 import { State } from '../intitialState';
 
 export class logStatusReducer {

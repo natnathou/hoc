@@ -1,18 +1,14 @@
 import {
   ActionTypes,
   addManyComments,
-  logAction,
-  MainAction,
   Comment,
-} from './../../../state/actions';
-import { intitialState } from './../../../state/intitialState';
-import { reducers } from './../../../state/reducers';
+  MainAction,
+} from '../../../state/actions';
+import { intitialState } from '../../../state/intitialState';
+import { commentsReducer } from '../../../state/reducers/commentsReducer';
 
-describe('when everything is ok', () => {
-  test('class reducers should return the correct state', () => {
-    let reducer = reducers(intitialState, logAction(true));
-    expect(reducer).toEqual({ isLogin: true, comments: {} });
-
+describe('when every thing ok', () => {
+  test('commentsReducer return the right state', () => {
     const comments: Comment[] = [
       {
         postId: 2121,
@@ -29,9 +25,12 @@ describe('when everything is ok', () => {
         body: 'Some body2',
       },
     ];
+    let CommentsReducers = commentsReducer.reduce(
+      intitialState,
+      addManyComments(comments)
+    );
 
-    reducer = reducers(intitialState, addManyComments(comments));
-    expect(reducer).toEqual({
+    const result = {
       comments: {
         '11': {
           body: 'Some body2',
@@ -49,12 +48,18 @@ describe('when everything is ok', () => {
         },
       },
       isLogin: false,
-    });
+    };
 
-    reducer = reducers(intitialState, {
+    expect(CommentsReducers).toEqual(result);
+
+    CommentsReducers = commentsReducer.reduce(intitialState, {
       type: ActionTypes.ANY_ACTIONTYPES_TEST,
       action: MainAction.ANY_MAINACTION_TEST,
     });
-    expect(reducer).toEqual({ isLogin: false, comments: {} });
+
+    expect(CommentsReducers).toEqual({
+      comments: {},
+      isLogin: false,
+    });
   });
 });
