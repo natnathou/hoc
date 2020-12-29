@@ -5,6 +5,7 @@ import { addManyComments, CommentType } from '../state/actions';
 import { useDispatch } from '../state/StateContext';
 import Header from './Header';
 import CommentsList from './CommentsList';
+import Form from './Form';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,9 @@ const App = () => {
       <Route path='/home' exact={true}>
         <CommentsList neverFetch={neverFetch} />
       </Route>
-      <Route path='/post' exact={true}></Route>
+      <Route path='/post' exact={true}>
+        <Form />
+      </Route>
       <Route path='/signin' exact={true}></Route>
     </div>
   );
