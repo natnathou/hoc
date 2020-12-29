@@ -1,7 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import '../style/Form.css';
 
-const Form = () => {
+export interface FormProps {
+  test: boolean;
+}
+const Form = ({ test }: FormProps) => {
+  console.log(test);
+
   const [text, setText] = React.useState('');
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -13,7 +18,7 @@ const Form = () => {
         <div className='comment'>
           <div className='content'>
             <span className='author'>Add comment</span>
-            <form className='ui reply form' role='form'>
+            <form className='ui reply form'>
               <div className='field'>
                 <textarea
                   data-testid='textArea'

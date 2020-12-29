@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, RenderResult } from '@testing-library/react';
 import Form from '../../components/Form';
 
 let rendering: RenderResult<
-  typeof import('e:/Biblioth\u00E8que/Documents/React/hoc - Copie/node_modules/@testing-library/dom/types/queries')
+  typeof import('@testing-library/dom/types/queries')
 >;
 
 describe('when everything is Ok', () => {

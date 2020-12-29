@@ -5,7 +5,10 @@ import { addManyComments, CommentType } from '../state/actions';
 import { useDispatch } from '../state/StateContext';
 import Header from './Header';
 import CommentsList from './CommentsList';
-import Form from './Form';
+import Form, { FormProps } from './Form';
+import { isConnectedHoc } from './IsConnected_Hoc';
+
+const FormConnected = isConnectedHoc<FormProps>(Form);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,7 +34,7 @@ const App = () => {
         <CommentsList neverFetch={neverFetch} />
       </Route>
       <Route path='/post' exact={true}>
-        <Form />
+        <FormConnected test={true} />
       </Route>
       <Route path='/signin' exact={true}></Route>
     </div>
