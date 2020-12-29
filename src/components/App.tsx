@@ -5,10 +5,10 @@ import { addManyComments, CommentType } from '../state/actions';
 import { useDispatch } from '../state/StateContext';
 import Header from './Header';
 import CommentsList from './CommentsList';
-import Form, { FormProps } from './Form';
-import { isConnectedHoc } from './IsConnected_Hoc';
+import Form from './Form';
+import { protectRouteHoc } from './protectRouteHoc';
 
-const FormConnected = isConnectedHoc<FormProps>(Form);
+const ProtectedRouteForm = protectRouteHoc(Form);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -33,9 +33,7 @@ const App = () => {
       <Route path='/home' exact={true}>
         <CommentsList neverFetch={neverFetch} />
       </Route>
-      <Route path='/post' exact={true}>
-        <FormConnected test={true} />
-      </Route>
+      <ProtectedRouteForm path='/post' exact={true} isConnected={true} />
       <Route path='/signin' exact={true}></Route>
     </div>
   );

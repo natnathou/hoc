@@ -1,12 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import '../style/Form.css';
 
-export interface FormProps {
-  test: boolean;
-}
-const Form = ({ test }: FormProps) => {
-  console.log(test);
-
+const Form = () => {
   const [text, setText] = React.useState('');
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {

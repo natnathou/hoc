@@ -14,9 +14,9 @@ describe('when everything is Ok', () => {
   test('form rendering', () => {});
 
   test('contain a form & a button', () => {
-    const { getByRole } = rendering;
+    const { getByRole, getByTestId } = rendering;
 
-    expect(getByRole('form')).toBeInTheDocument();
+    expect(getByTestId('textArea')).toBeInTheDocument();
 
     expect(getByRole('button')).toBeInTheDocument();
   });
@@ -24,8 +24,6 @@ describe('when everything is Ok', () => {
   test('value of the text change when we type', async () => {
     const someInput = 'Some Input';
     const { getByTestId, findByText } = rendering;
-
-    expect(getByTestId('textArea')).toBeInTheDocument();
 
     fireEvent.change(getByTestId('textArea'), { target: { value: someInput } });
 
