@@ -1,5 +1,8 @@
 import React from 'react';
 import {
+  findByRole,
+  fireEvent,
+  getAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -38,7 +41,7 @@ describe('when everything is ok', () => {
     mockGetUser.mockResolvedValue({
       data: comments,
     });
-    let { getByText, findByText } = render(
+    let { getByText, findByText, getAllByRole } = render(
       <Router>
         <Provider />
       </Router>
@@ -52,5 +55,8 @@ describe('when everything is ok', () => {
     });
 
     expect(await findByText(/earum/)).toBeInTheDocument();
+    fireEvent.click(getAllByRole('link')[1]);
+
+    expect(await findByText(/Please connect first!/)).toBeInTheDocument();
   });
 });
