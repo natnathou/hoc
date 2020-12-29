@@ -56,7 +56,6 @@ describe('when everything is ok', () => {
 
     expect(await findByText(/earum/)).toBeInTheDocument();
     fireEvent.click(getAllByRole('link')[1]);
-
     expect(await findByText(/Please connect first!/)).toBeInTheDocument();
   });
 });
