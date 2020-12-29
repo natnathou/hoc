@@ -1,12 +1,11 @@
 import React from 'react';
 import {
   render,
-  screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import axios from 'axios';
 import { mocked } from 'ts-jest/utils';
-
 import App from '../../components/App';
 import Router from '../../components/Router';
 import { CommentType } from '../../state/actions';
@@ -36,14 +35,22 @@ const comments: CommentType[] = [
 describe('when everything is ok', () => {
   beforeEach(() => {});
   test('fetch comment just once', async () => {
-    mockGetUser.mockResolvedValue({ data: { comments } });
-    let { getByText } = render(
+    mockGetUser.mockResolvedValue({
+      data: comments,
+    });
+    let { getByText, findByText } = render(
       <Router>
         <App />
       </Router>
     );
+    expect(mockGetUser).toHaveBeenCalledTimes(1);
 
     await waitForElementToBeRemoved(() => getByText(/fetching.../i));
-    expect(mockGetUser).toHaveBeenCalledTimes(1);
+
+    await waitFor(() => {
+      getByText(/quo vero/);
+    });
+
+    expect(await findByText(/earum/)).toBeInTheDocument();
   });
 });

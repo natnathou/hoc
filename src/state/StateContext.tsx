@@ -1,4 +1,5 @@
 import React from 'react';
+import { ContextDevTool } from 'react-context-devtool';
 import { Action } from './actions';
 import { State, intitialState } from './intitialState';
 
@@ -22,7 +23,10 @@ export const StateProvider = ({
 }: StateProviderProps) => {
   const [state, dispatch] = React.useReducer(reducers, intitialState);
   return (
-    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+    <Context.Provider value={{ state, dispatch }}>
+      <ContextDevTool context={Context} id='Context' displayName='Context' />
+      {children}
+    </Context.Provider>
   );
 };
 

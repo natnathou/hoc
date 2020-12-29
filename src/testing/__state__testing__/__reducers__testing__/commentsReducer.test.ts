@@ -9,7 +9,7 @@ import { commentsReducer } from '../../../state/reducers/commentsReducer';
 
 describe('when every thing ok', () => {
   test('commentsReducer return the right state', () => {
-    const comments: Comment[] = [
+    const comments: CommentType[] = [
       {
         postId: 2121,
         id: 12121,

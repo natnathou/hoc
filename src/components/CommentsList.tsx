@@ -2,13 +2,12 @@ import React from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 import { useDispatch, useGlobalContext } from '../state/StateContext';
-import { addManyComments, CommentType } from '../state/actions';
+import { addManyComments, CommentType, logAction } from '../state/actions';
 import '../style/CommentsList.css';
 
 const CommentsList = () => {
   const dispatch = useDispatch();
   const { comments } = useGlobalContext();
-  console.log(useGlobalContext().comments);
   const [state, setstate] = React.useState(true);
   React.useEffect(() => {
     axios
@@ -19,7 +18,6 @@ const CommentsList = () => {
         setstate(false);
       });
   }, [dispatch]);
-  console.log(comments);
   const commentsRendering = () => {
     const commentsArray = _.toArray(comments);
     return commentsArray.map((data, index) => {
