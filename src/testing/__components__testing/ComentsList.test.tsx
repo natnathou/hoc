@@ -1,56 +1,19 @@
 import React from 'react';
-import {
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
-import axios from 'axios';
-import { mocked } from 'ts-jest/utils';
-import App from '../../components/App';
-import Router from '../../components/Router';
-import { CommentType } from '../../state/actions';
+import { render, RenderResult } from '@testing-library/react';
+import CommentsList from '../../components/CommentsList';
 
-const axiosMock = jest.spyOn(axios, 'get');
-const mockGetUser = mocked(axiosMock, true);
-
-const comments: CommentType[] = [
-  {
-    postId: 1,
-    id: 1,
-    name: 'id labore ex et quam laborum',
-    email: 'Eliseo@gardner.biz',
-    body:
-      'laudantium enim quasi est quidem magnam voluptate ipsam eos tempora quo necessitatibus dolor quam autem quasi reiciendis et nam sapiente accusantium',
-  },
-  {
-    postId: 2,
-    id: 2,
-    name: 'quo vero reiciendis velit similique earum',
-    email: 'Jayne_Kuhic@sydney.com',
-    body:
-      'est natus enim nihil est dolore omnis voluptatem numquam et omnis occaecati quod ullam at voluptatem error expedita pariatur nihil sint nostrum voluptatem reiciendis et',
-  },
-];
+let rendering: RenderResult<
+  typeof import('e:/Biblioth\u00E8que/Documents/React/hoc - Copie/node_modules/@testing-library/dom/types/queries')
+>;
 
 describe('when everything is ok', () => {
-  beforeEach(() => {});
-  test('fetch comment just once', async () => {
-    mockGetUser.mockResolvedValue({
-      data: comments,
-    });
-    let { getByText, findByText } = render(
-      <Router>
-        <App />
-      </Router>
-    );
-    expect(mockGetUser).toHaveBeenCalledTimes(1);
+  beforeEach(() => {
+    rendering = render(<CommentsList neverFetch={true} />);
+  });
 
-    await waitForElementToBeRemoved(() => getByText(/fetching.../i));
+  test('Component is rendering', () => {});
 
-    await waitFor(() => {
-      getByText(/quo vero/);
-    });
-
-    expect(await findByText(/earum/)).toBeInTheDocument();
+  test('Contain  the text fetching', async () => {
+    expect(await rendering.findByText(/fetching/)).toBeInTheDocument();
   });
 });

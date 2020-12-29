@@ -1,25 +1,36 @@
 import React from 'react';
-import { reducers } from '../state/reducers';
-import { intitialState } from '../state/intitialState';
-import { StateProvider } from '../state/StateContext';
+import axios from 'axios';
+import { Redirect, Route } from 'react-router-dom';
+import { addManyComments, CommentType } from '../state/actions';
+import { useDispatch } from '../state/StateContext';
 import Header from './Header';
 import CommentsList from './CommentsList';
-import { Redirect, Route } from 'react-router-dom';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const [neverFetch, setNeverFetch] = React.useState(true);
+
+  React.useEffect(() => {
+    axios
+      .get<CommentType[]>('https://jsonplaceholder.typicode.com/comments')
+      .then(async (response) => {
+        let data = response.data;
+        dispatch(addManyComments(data));
+        setNeverFetch(false);
+      });
+  }, [dispatch]);
+
   return (
     <div className='ui container'>
-      <StateProvider reducers={reducers} intitialState={intitialState}>
-        <Header />
-        <Route path='/' exact={true}>
-          <Redirect to='/home' />
-        </Route>
-        <Route path='/home' exact={true}>
-          <CommentsList />
-        </Route>
-        <Route path='/post' exact={true}></Route>
-        <Route path='/signin' exact={true}></Route>
-      </StateProvider>
+      <Header />
+      <Route path='/' exact={true}>
+        <Redirect to='/home' />
+      </Route>
+      <Route path='/home' exact={true}>
+        <CommentsList neverFetch={neverFetch} />
+      </Route>
+      <Route path='/post' exact={true}></Route>
+      <Route path='/signin' exact={true}></Route>
     </div>
   );
 };

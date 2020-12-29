@@ -1,23 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import _ from 'lodash';
-import { useDispatch, useGlobalContext } from '../state/StateContext';
-import { addManyComments, CommentType, logAction } from '../state/actions';
+import { useGlobalContext } from '../state/StateContext';
 import '../style/CommentsList.css';
 
-const CommentsList = () => {
-  const dispatch = useDispatch();
+interface Props {
+  neverFetch: boolean;
+}
+const CommentsList = ({ neverFetch }: Props) => {
   const { comments } = useGlobalContext();
-  const [state, setstate] = React.useState(true);
-  React.useEffect(() => {
-    axios
-      .get<CommentType[]>('https://jsonplaceholder.typicode.com/comments')
-      .then(async (response) => {
-        let data = response.data;
-        dispatch(addManyComments(data));
-        setstate(false);
-      });
-  }, [dispatch]);
+
   const commentsRendering = () => {
     const commentsArray = _.toArray(comments);
     return commentsArray.map((data, index) => {
@@ -36,7 +27,7 @@ const CommentsList = () => {
   };
   return (
     <div className='CommentsList'>
-      {state ? 'fetching...' : null}
+      {neverFetch ? 'fetching...' : null}
       <div className='ui comments' data-testid='list'>
         {commentsRendering()}
       </div>
