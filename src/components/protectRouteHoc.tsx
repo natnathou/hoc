@@ -15,12 +15,12 @@ export const protectRouteHoc = <P,>(
     const otherProps = (_.omit({ ...props }, [
       'path',
       'exact',
+      'isConnected',
     ]) as unknown) as P;
     const routeProps = (_.omit(
       { ...props },
       _.keys({ ...otherProps })
     ) as unknown) as RouteProps;
-
     return (
       <Route {...routeProps}>
         {routeProps.isConnected ? (

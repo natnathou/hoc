@@ -2,15 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import { Redirect, Route } from 'react-router-dom';
 import { addManyComments, CommentType } from '../state/actions';
-import { useDispatch } from '../state/StateContext';
+import { useDispatch, useGlobalContext } from '../state/StateContext';
+import { protectRouteHoc } from './protectRouteHoc';
 import Header from './Header';
 import CommentsList from './CommentsList';
 import Form from './Form';
-import { protectRouteHoc } from './protectRouteHoc';
+import Signin from './Signin';
 
 const ProtectedRouteForm = protectRouteHoc(Form);
 
 const App = () => {
+  const { isLogin } = useGlobalContext();
   const dispatch = useDispatch();
   const [neverFetch, setNeverFetch] = React.useState(true);
 
@@ -33,8 +35,10 @@ const App = () => {
       <Route path='/home' exact={true}>
         <CommentsList neverFetch={neverFetch} />
       </Route>
-      <ProtectedRouteForm path='/post' exact={true} isConnected={true} />
-      <Route path='/signin' exact={true}></Route>
+      <ProtectedRouteForm path='/post' exact={true} isConnected={isLogin} />
+      <Route path='/signin' exact={true}>
+        <Signin />
+      </Route>
     </div>
   );
 };
