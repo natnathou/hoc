@@ -29,6 +29,7 @@ const Signin = () => {
           <div
             className='ui fluid large teal submit button'
             onClick={handleClick}
+            role='button'
           >
             Login
           </div>
@@ -44,6 +45,7 @@ const Signin = () => {
           <div
             className='ui fluid large red submit button'
             onClick={handleClick}
+            role='button'
           >
             Logout
           </div>

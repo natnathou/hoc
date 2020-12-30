@@ -1,8 +1,6 @@
 import React from 'react';
 import {
-  findByRole,
   fireEvent,
-  getAllByRole,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -35,27 +33,53 @@ const comments: CommentType[] = [
   },
 ];
 
-describe('when everything is ok', () => {
-  beforeEach(() => {});
-  test('fetch comment just once', async () => {
-    mockGetUser.mockResolvedValue({
-      data: comments,
-    });
-    let { getByText, findByText, getAllByRole } = render(
-      <Router>
-        <Provider />
-      </Router>
-    );
-    expect(mockGetUser).toHaveBeenCalledTimes(1);
-
-    await waitForElementToBeRemoved(() => getByText(/fetching.../i));
-
-    await waitFor(() => {
-      getByText(/quo vero/);
-    });
-
-    expect(await findByText(/earum/)).toBeInTheDocument();
-    fireEvent.click(getAllByRole('link')[1]);
-    expect(await findByText(/Please connect first!/)).toBeInTheDocument();
+test('When everything is ok', async () => {
+  mockGetUser.mockResolvedValue({
+    data: comments,
   });
+  let { getByText, findByText, getByRole, getAllByRole, getByTestId } = render(
+    <Router>
+      <Provider />
+    </Router>
+  );
+
+  // fetch just once
+  expect(mockGetUser).toHaveBeenCalledTimes(1);
+
+  //wait that fetching is remove
+  await waitForElementToBeRemoved(() => getByText(/fetching.../i));
+
+  //wait that Posts appear
+  await waitFor(() => {
+    getByText(/quo vero/);
+  });
+
+  expect(await findByText(/earum/)).toBeInTheDocument();
+
+  //click on post
+  fireEvent.click(getAllByRole('link')[1]);
+  expect(await findByText(/Please connect first!/)).toBeInTheDocument();
+
+  //Simulate connection
+  //click on Signin Header
+  fireEvent.click(getAllByRole('link')[2]);
+  expect(await findByText(/Login/)).toBeInTheDocument();
+
+  //click on login
+  fireEvent.click(getByRole('button'));
+  expect(await findByText(/Logout/)).toBeInTheDocument();
+
+  //click on post
+  fireEvent.click(getAllByRole('link')[1]);
+  expect(getByTestId('textArea')).toBeInTheDocument();
+
+  //Simulate deconection
+  //click on Signin Header
+  fireEvent.click(getAllByRole('link')[2]);
+  fireEvent.click(getByRole('button'));
+  expect(await findByText(/Login/)).toBeInTheDocument();
+
+  //click on post
+  fireEvent.click(getAllByRole('link')[1]);
+  expect(await findByText(/Please connect first!/)).toBeInTheDocument();
 });
